@@ -1,4 +1,5 @@
 import random
+from collections import namedtuple
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
@@ -14,6 +15,7 @@ class Point:
 print("2")
 
 
+''' 
 class Node:
     def __init__(self, x0, y0, w, h, points):
         self.x0 = x0
@@ -31,6 +33,9 @@ class Node:
 
     def get_points(self):
         return self.points
+'''
+
+Node = namedtuple('Node', 'topLeft topRight bottomLeft bottomRight w h points')
 
 
 print("3")
@@ -39,37 +44,34 @@ print("3")
 class QuadTree:
     def __init__(self, k, n):
         self.threshold = k
-        self.points = []
+        self.points = [(7, 3), (9, 1), (1, 8), (8, 2), (2, 5), (7, 2)]
         # self.points = [Point(random.uniform(0, 10), random.uniform(0, 10)) for x in range(n)]
-        input = [(7, 3), (9, 1), (1, 8), (8, 2), (2, 5), (7, 2)]
-        for tu in input:
-            self.point_insertion(self,tu[0],tu[1])
+        # input = [(7, 3), (9, 1), (1, 8), (8, 2), (2, 5), (7, 2)]
 
-    def point_insertion(self, x, y):
-        self.points.append(Point(x, y))
+#    def point_insertion(self, x, y):
+#        self.points.append(Point(x, y))
 
-    def get_points(self):
-        return self.points
+#    def get_points(self):
+#        return self.points
 
     def subdivide(self):
-        dimension = 2
+#        dimension = 2
         det = 0
-        axis = det % dimension
-        if axis == 0:
-            self.points.sort(key=lambda tup: tup.x)
-        if axis == 1:
-            self.points.sort(key=lambda tup: tup.y)
-        median = round(len(self.points) / 2)
-        root = self.points[median]
-        self.points.remove(root)
-        node = Node
-        self.points.sort(key=lambda tup: tup.x)
-        w = (self.points[-1].x - self.points[0].x) / 2
-        self.points.sort(key=lambda tup: tup.y)
-        h = (self.points[-1].y - self.points[0].y) / 2
-        node.__init__(Node, root.x, root.y, w, h, self.points)
-        recursive_subdivide(node, self.threshold, det)
+#        axis = det % dimension
+#        self.points.sort(key=lambda tup: tup[axis])
+#        median = round(len(self.points) / 2)
+#        root = self.points[median]
+#        self.points.remove(root)
+        self.points.sort(key=lambda tup: tup[0])
+        w = (self.points[-1][0] - self.points[0][0]) / 2
+        self.points.sort(key=lambda tup: tup[1])
+        h = (self.points[-1][1] - self.points[0][1]) / 2
+        root = Node(None, None, None, None, w, h, self.points)
+        recursive_subdivide(root, self.threshold, det)
+        return root
 
+
+'''
     def graph(self):
         fig = plt.figure(figsize=(12, 8))
         plt.title("Quadtree")
@@ -87,34 +89,38 @@ class QuadTree:
         plt.plot(x, y, 'ro')
         plt.show()
         return
+'''
 
 print("4")
 
 
 def recursive_subdivide(node, k, rdet):
     if len(node.points) <= k:
-        return
+        return None
 
-    w_ = float(node.width / 2)
-    h_ = float(node.height / 2)
+    w_ = float(node.w / 2)
+    h_ = float(node.h / 2)
 
-    p = contains(node.x0, node.y0, w_, h_, node.points)
-    x1 = Node(node.x0, node.y0, w_, h_, p)
-    recursive_subdivide(x1, k, rdet)
+    p = contains(node.w, node.h, w_, h_, node.points)
+    bottomLeftChild = Node(None, None, None, None, w_, h_, p)
 
-    p = contains(node.x0, node.y0 + h_, w_, h_, node.points)
-    x2 = Node(node.x0, node.y0 + h_, w_, h_, p)
-    recursive_subdivide(x2, k, rdet)
+    p = contains(node.w, node.h + h_, w_, h_, node.points)
+    topLeftChild = Node(None, None, None, None, w_, h_, p)
 
-    p = contains(node.x0 + w_, node.y0, w_, h_, node.points)
-    x3 = Node(node.x0 + w_, node.y0, w_, h_, p)
-    recursive_subdivide(x3, k, rdet)
+    p = contains(node.w + w_, node.h, w_, h_, node.points)
+    bottomRightChild = Node(None, None, None, None, w_, h_, p)
 
-    p = contains(node.x0 + w_, node.y0 + w_, w_, h_, node.points)
-    x4 = Node(node.x0 + w_, node.y0 + h_, w_, h_, p)
-    recursive_subdivide(x4, k, rdet)
+    p = contains(node.w + w_, node.h + w_, w_, h_, node.points)
+    topRightChild = Node(None, None, None, None, w_, h_, p)
 
-    node.children = [x1, x2, x3, x4]
+    node = Node(topLeftChild, topRightChild, bottomLeftChild, bottomRightChild, node.w, node.h, p)
+
+    recursive_subdivide(node.bottomLeft, k, rdet)
+    recursive_subdivide(node.topLeft, k, rdet)
+    recursive_subdivide(node.bottomRight, k, rdet)
+    recursive_subdivide(node.topRight, k, rdet)
+
+    # node.children = [x1, x2, x3, x4]
 
     rdet = rdet + 1
 
@@ -125,9 +131,9 @@ print("5")
 def contains(x, y, w, h, points):
     pts = []
     for point in points:
-        if point.x >= x and point.x <= x + w and point.y >= y and point.y <= y + h:
+        if x <= 2 <= x + w and y <= 5 <= y + h:
             pts.append(point)
-    print(pts)
+            print(pts)
     return pts
 
 
@@ -145,5 +151,6 @@ print("6")
 
 qt = QuadTree
 qt.__init__(qt, 2, 2)
-qt.subdivide(qt)
-qt.graph()
+root = qt.subdivide(qt)
+print(root)
+# qt.graph()
