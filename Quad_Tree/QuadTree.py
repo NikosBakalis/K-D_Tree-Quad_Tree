@@ -48,6 +48,4 @@ def insert(minimum, mid, maximum):
 
 # qt = QuadTree()
 boundaries(0, 0)
-insert(5, [0, 0], 5)
-
-# TODO: parse the actual numbers
+insert(5, [0, 0], 5)  # TODO: parse the actual numbers
