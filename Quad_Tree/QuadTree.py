@@ -7,43 +7,47 @@ class QuadTree:
         self.max_height = 0
         self.mid_point = []
 
-    def boundaries(self, max_width, max_height):
-        for i in points:
-            if i[0] < 0:
-                i[0] = i[0] * (-1)
-                if i[0] > max_width:
-                    max_width = i[0] * 2
-                else:
-                    continue
-        for i in points:
-            if i[1] < 0:
-                i[1] = i[1] * (-1)
-                if i[1] > max_height:
-                    max_height = i[1] * 2
-                else:
-                    continue
-        print(max_width, max_height)
-        mid_point = [max_width / 2, max_height / 2]
-        print(mid_point)
 
-        def build():
-            print("He will be the build")
+def boundaries(max_width, max_height):
+    for i in points:
+        if i[0] < 0:
+            i[0] = i[0] * (-1)
+            if i[0] > max_width:
+                max_width = i[0] * 2
+            else:
+                continue
+    for i in points:
+        if i[1] < 0:
+            i[1] = i[1] * (-1)
+            if i[1] > max_height:
+                max_height = i[1] * 2
+            else:
+                continue
+    print(max_width, max_height)
+    mid_point = [max_width / 2, max_height / 2]
+    print(mid_point)
 
 
-def insert():
+def build():
+    print("He will be the build")
+
+
+def insert(minimum, mid, maximum):
     for point in points:
         print(point)
-        if -5 <= point[0] <= 0 and 0 <= point[1] <= 5:
+        if -minimum <= point[0] <= mid[0] and mid[1] <= point[1] <= maximum:
             print("Top Left")
-        if 0 <= point[0] <= 5 and 0 <= point[1] <= 5:
+        if mid[0] <= point[0] <= maximum and mid[1] <= point[1] <= maximum:
             print("Top Right")
-        if -5 <= point[0] <= 0 and -5 <= point[1] <= 0:
+        if -minimum <= point[0] <= mid[0] and -minimum <= point[1] <= mid[1]:
             print("Bottom Left")
-        if 0 <= point[0] <= 5 and -5 <= point[1] <= 0:
+        if mid[0] <= point[0] <= maximum and -minimum <= point[1] <= mid[1]:
             print("Bottom Right")
     print(points)
 
 
-insert()
-qt = QuadTree
-qt.boundaries(qt, 0, 0)
+# qt = QuadTree()
+boundaries(0, 0)
+insert(5, [0, 0], 5)
+
+# TODO: parse the actual numbers
