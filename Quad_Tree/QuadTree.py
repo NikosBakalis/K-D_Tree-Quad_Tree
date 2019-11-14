@@ -19,6 +19,7 @@ def insert():
         if 0 <= point[0] <= 5 and -5 <= point[1] <= 0:
             print("Bottom Right")
     print(points)
+    # Test
 
 
 insert()
