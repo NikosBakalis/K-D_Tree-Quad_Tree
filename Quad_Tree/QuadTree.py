@@ -1,20 +1,24 @@
-points = [[-1, 1], [1, 1], [-1, -1], [1, -1]]
+points = [[-3, 1], [1, 1], [-1, -5], [1, -1]]
 
 
 class QuadTree:
     def boundaries(self, max_width, max_height):
         self.max_width = 0
         for i in points:
-            if i[0] > 0:
-                max_width = i[0] * 2
-            else:
-                continue
+            if i[0] < 0:
+                i[0] = i[0] * (-1)
+                if i[0] > max_width:
+                    max_width = i[0] * 2
+                else:
+                    continue
         self.max_height = 0
         for i in points:
-            if i[1] > 0:
-                max_height = i[1] * 2
-            else:
-                continue
+            if i[1] < 0:
+                i[1] = i[1] * (-1)
+                if i[1] > max_height:
+                    max_height = i[1] * 2
+                else:
+                    continue
         print(max_width, max_height)
 
         def build():
