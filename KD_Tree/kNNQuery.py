@@ -22,3 +22,7 @@ def kNNSearch(node, queryPoint, k, depth = 0, minimumDistance = float('inf')):
         return kNNSearch(node.leftChild, queryPoint, k, depth + 1, minimumDistance)  # Search left sub tree
     else:
         return kNNSearch(node.rightChild, queryPoint, k, depth + 1, minimumDistance)  # Search right sub tree
+
+
+
+#Omiros Tests Files!@!@# !@
