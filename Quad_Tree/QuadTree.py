@@ -1,8 +1,5 @@
-'''
 import random
 from collections import namedtuple
-
-
 # import matplotlib.pyplot as plt
 # import matplotlib.patches as patches
 
@@ -19,14 +16,14 @@ Node = namedtuple('Node', 'topLeft topRight bottomLeft bottomRight w h points')
 class QuadTree:
     def __init__(self, k, n):
         self.threshold = k
-        self.points = [(7, 3), (9, 1), (1, 8), (8, 2), (2, 5), (7, 2)]
-        # self.points = [Point(random.uniform(0, 10), random.uniform(0, 10)) for x in range(n)]
+        # self.points = [(7, 3), (9, 1), (1, 8), (8, 2), (2, 5), (7, 2)]
+        self.points = [Point(random.uniform(0, 10), random.uniform(0, 10)) for x in range(n)]
 
-    #    def point_insertion(self, x, y):
-    #        self.points.append(Point(x, y))
+#    def point_insertion(self, x, y):
+#        self.points.append(Point(x, y))
 
-    #    def get_points(self):
-    #        return self.points
+#    def get_points(self):
+#        return self.points
 
     def subdivide(self):
         self.points.sort(key=lambda tup: tup[0])
@@ -37,10 +34,8 @@ class QuadTree:
         recursive_subdivide(root, self.threshold)
         return root
 
-'''
 
 '''
-
     def graph(self):
         fig = plt.figure(figsize=(12, 8))
         plt.title("Quadtree")
@@ -58,7 +53,6 @@ class QuadTree:
         plt.plot(x, y, 'ro')
         plt.show()
         return
-'''
 '''
 
 
@@ -88,6 +82,8 @@ def recursive_subdivide(node, k):
     recursive_subdivide(node.bottomRight, k)
     recursive_subdivide(node.topRight, k)
 
+    # node.children = [x1, x2, x3, x4]
+
 
 def contains(x, y, w, h, points):
     pts = []
@@ -113,34 +109,3 @@ qt.__init__(qt, 2, 2)
 root = qt.subdivide(qt)
 print(root)
 # qt.graph()
-'''
-
-
-class QT:
-    def __init__(self, max_width, max_height):
-        self.max_width = max_width
-        self.max_height = max_height
-
-        # def build():
-
-
-def insert():
-    points = [[-1, 1], [1, 1], [-1, -1], [1, -1]]
-    for point in range(points):
-        print(point)
-        if -5 <= point[0] <= 0 and 0 <= point[1] <= 5:
-            print("Top Left")
-            points.remove(point)
-        if 0 <= point[0] <= 5 and 0 <= point[1] <= 5:
-            print("Top Right")
-            points.remove(point)
-        if -5 <= point[0] <= 0 and -5 <= point[1] <= 0:
-            print("Bottom Left")
-            points.remove(point)
-        if 0 <= point[0] <= 5 and -5 <= point[1] <= 0:
-            print("Bottom Right")
-            points.remove(point)
-    print(points)
-
-
-insert()
