@@ -1,14 +1,16 @@
 dimensions = 2
 
-
-def kdTreeSearch(node, point, depth=0):
+def kdTreeSearch(node, point, depth = 0, previous_node = None):
     if node is None:
+        print(previous_node)
         return False
     if node.node == point:
         return True
 
     axis = depth % dimensions
-    if (point[axis] < node[0][axis]):
-        return kdTreeSearch(node.leftChild, point, depth + 1)  # Search left sub tree
+    if (point[axis] < node.node[axis]):
+        previous_node = node
+        return kdTreeSearch(node.leftChild, point, depth + 1, previous_node) #Search left sub tree
     else:
-        return kdTreeSearch(node.rightChild, point, depth + 1)  # Search right sub tree
+        previous_node = node
+        return kdTreeSearch(node.rightChild, point, depth + 1, previous_node) #Search right sub tree
