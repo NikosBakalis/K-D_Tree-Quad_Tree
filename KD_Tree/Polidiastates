@@ -1,7 +1,0 @@
-Στόχος: Στόχος των projects είναι η υλοποίηση πολυδιάστατων δομών δεδομένων σε Περιβάλλον Προγραμματισμού της αρεσκείας σας, με προτίμηση τις γλώσσες scala ή python και η πειραματική αξιολόγησή τους με data sets συνθετικά (artificial synthetic-data sets) ή ακόμα και πραγματικά (rea-data sets) στις βασικές πράξεις: Build, Insert, Delete, Update, Searching (Similarity, kNN) Queries. Για να κατεβάσετε real datasets, μπορείτε να επισκευθείτε τον ακόλουθο σύνδεσμο: https://freegisdata.rtwilson.com/ 
-
-
-
-
-     διαστάσεις. Εφαρμογή fractional cascading και δεύτερη πειραματική σύγκριση. 
-    3. K-D trees και Quad Trees: Πειραματική Σύγκριση των δύο δομών (Storage/Build/Insert/Delete/Update/Search performance comparison) για 2 διαστάσεις. Υλοποίηση kNN Queries με τις παραπάνω δύο δομές και πειραματική σύγκριση. 
