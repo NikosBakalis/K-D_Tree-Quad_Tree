@@ -1,8 +1,9 @@
 import medianBuild
 import searchPoint
 import rebalance
-import insertNode
 import insert
+
+
 
 points = [(7, 2), (5, 4), (9, 6), (4, 7), (8, 1), (2, 3)]
 dimensions = 2
@@ -16,6 +17,8 @@ if searchedPoint['found']:
 else:
     print("Not Found")
 
+insert.insertNode(root, (8, 2))
+
+
 root = rebalance.balanceKdTree(root)
 
-ins
