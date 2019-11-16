@@ -2,7 +2,7 @@ dimensions = 2
 
 def kdTreeSearch(node, point, depth = 0, previous_node = None):
     if node is None:
-        print(previous_node)
+        return (previous_node)
         return False
     if node.node == point:
         return True
