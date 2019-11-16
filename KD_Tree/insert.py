@@ -11,6 +11,7 @@ def insertNode(root, point):
         axis = depth % 2  # 2 cause this tree has 2 dimensions
         node = searchedNode['parentNode']
         if axis == 0:
-            node.leftChild = point
+            node = (node.node, node.rightChild, point)
         else:
-            node.rightChild = point
+            node = (node.node, point, node.leftChild)
+
