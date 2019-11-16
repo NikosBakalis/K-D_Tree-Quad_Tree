@@ -18,3 +18,4 @@ def buildTree(points, depth=0):
         'rightChild': buildTree(points[median + 1:], depth + 1),
         'leftChild': buildTree(points[:median], depth + 1)
     }
+
