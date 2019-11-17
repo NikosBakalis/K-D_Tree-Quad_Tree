@@ -10,14 +10,14 @@ dimensions = 2
 
 root = medianBuild.kdTreeBuild(points, 0)  # Build the tree
 
-searchedPoint = searchPoint.kdTreeSearch(root, (8, 1))  # The point needs to be created first in order to be compared
+insert.insertNode(root, (8, 2))
+searchedPoint = searchPoint.kdTreeSearch(root, (8, 2))  # The point needs to be created first in order to be compared
 # in if function
 if searchedPoint['found']:
     print("Found")
 else:
     print("Not Found")
 
-insert.insertNode(root, (8, 2))
 
 
 root = rebalance.balanceKdTree(root)
