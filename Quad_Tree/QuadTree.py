@@ -1,5 +1,5 @@
 # Test on PC No. 2
-points = [[-3, 1], [1, 1], [-1, -5], [1, -1]]
+points = [[-3, 1], [1, 1], [-1, -5], [1, -1], [1, 2]]
 
 
 class QuadTree:
@@ -34,19 +34,39 @@ def build():
 
 
 def insert(minimum, mid, maximum):
+    counterTL = 0
+    counterTR = 0
+    counterBL = 0
+    counterBR = 0
     for point in points:
         print(point)
         if -minimum <= point[0] <= mid[0] and mid[1] <= point[1] <= maximum:
             print("Top Left")
+            counterTL += 1
+            if counterTL > 1:
+                subdivide()
         if mid[0] <= point[0] <= maximum and mid[1] <= point[1] <= maximum:
             print("Top Right")
+            counterTR += 1
+            if counterTR > 1:
+                subdivide()
         if -minimum <= point[0] <= mid[0] and -minimum <= point[1] <= mid[1]:
             print("Bottom Left")
+            counterBL += 1
+            if counterBL > 1:
+                subdivide()
         if mid[0] <= point[0] <= maximum and -minimum <= point[1] <= mid[1]:
             print("Bottom Right")
+            counterBR += 1
+            if counterBR > 1:
+                subdivide()
     print(points)
 
 
+def subdivide():
+
+
+
 # qt = QuadTree()
-boundaries(0, 0)
+# boundaries(0, 0)
 insert(5, [0, 0], 5)  # TODO: parse the actual numbers
