@@ -64,8 +64,11 @@ def insert(minimum, mid, maximum):
     print(points)
 
 
-def subdivide():
+def subdivide(current_x=5, current_y=5):  # TODO: parse the actual fucking numbers!!!
     print("HERE I WILL SUBDIVIDE")
+    current_x = current_x / 2
+    current_y = current_y / 2
+    return current_x, current_y
 
 
 # qt = QuadTree()
