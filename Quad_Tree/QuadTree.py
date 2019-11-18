@@ -1,5 +1,5 @@
 # Test on PC No. 2
-points = [[-3, 1], [1, 1], [-1, -5], [1, -1], [1, 2]]
+points = [[-3, 1], [1, 1], [-1, -5], [1, -1], [1, 2], [2, 2], [0.5, 2.7]]
 
 
 class QuadTree:
@@ -45,22 +45,22 @@ def insert(minimum, mid, maximum):
             print("Top Left")
             counterTL += 1
             if counterTL > max_nodes_per_quad:
-                subdivide()
+                subdivide(minimum, maximum)
         if mid[0] <= point[0] <= maximum and mid[1] <= point[1] <= maximum:
             print("Top Right")
             counterTR += 1
             if counterTR > max_nodes_per_quad:
-                subdivide()
+                subdivide(minimum, maximum)
         if -minimum <= point[0] <= mid[0] and -minimum <= point[1] <= mid[1]:
             print("Bottom Left")
             counterBL += 1
             if counterBL > max_nodes_per_quad:
-                subdivide()
+                subdivide(minimum, maximum)
         if mid[0] <= point[0] <= maximum and -minimum <= point[1] <= mid[1]:
             print("Bottom Right")
             counterBR += 1
             if counterBR > max_nodes_per_quad:
-                subdivide()
+                subdivide(minimum, maximum)
     print(points)
 
 
