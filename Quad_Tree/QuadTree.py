@@ -1,76 +1,113 @@
 # Test on PC No. 2
-points = [[-3, 1], [1, 1], [-1, -5], [1, -1], [1, 2], [2, 2], [0.5, 2.7]]
+from recordtype import recordtype
+
+# points = [(-3, 1), (1, 1), (-1, -5), (1, -1), (1, 2), (2, 2), (0.5, 2.7)]
+points = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+
+qtNode = recordtype('qtNode', 'TopLeftChild TopRightChild BottomLeftChild BottomRightChild points x y')
 
 
-class QuadTree:
-    def __init__(self):
-        self.max_width = 0
-        self.max_height = 0
-        self.mid_point = []
+def boundaries(points):
+    points.sort(key=lambda tup: tup[0])
+    mid_x = (points[0][0] + points[-1][0]) / 2
+    points.sort(key=lambda tup: tup[1])
+    mid_y = (points[0][1] + points[-1][1]) / 2
+    return mid_x, mid_y
 
 
-def boundaries(max_width, max_height):
-    for i in points:
-        if i[0] < 0:
-            i[0] = i[0] * (-1)
-            if i[0] > max_width:
-                max_width = i[0] * 2
-            else:
-                continue
-    for i in points:
-        if i[1] < 0:
-            i[1] = i[1] * (-1)
-            if i[1] > max_height:
-                max_height = i[1] * 2
-            else:
-                continue
-    print(max_width, max_height)
-    mid_point = [max_width / 2, max_height / 2]
-    print(mid_point)
-
-
-def build():
-    print("He will be the build")
-
-
-def insert(minimum, mid, maximum):
-    counterTL = 0
-    counterTR = 0
-    counterBL = 0
-    counterBR = 0
+def build(points, max_nodes_per_quad):
     max_nodes_per_quad = 1  # TODO: This will be asked from the user
-    for point in points:
-        print(point)
-        if -minimum <= point[0] <= mid[0] and mid[1] <= point[1] <= maximum:
-            print("Top Left")
-            counterTL += 1
-            if counterTL > max_nodes_per_quad:
-                subdivide(minimum, maximum)
-        if mid[0] <= point[0] <= maximum and mid[1] <= point[1] <= maximum:
-            print("Top Right")
-            counterTR += 1
-            if counterTR > max_nodes_per_quad:
-                subdivide(minimum, maximum)
-        if -minimum <= point[0] <= mid[0] and -minimum <= point[1] <= mid[1]:
-            print("Bottom Left")
-            counterBL += 1
-            if counterBL > max_nodes_per_quad:
-                subdivide(minimum, maximum)
-        if mid[0] <= point[0] <= maximum and -minimum <= point[1] <= mid[1]:
-            print("Bottom Right")
-            counterBR += 1
-            if counterBR > max_nodes_per_quad:
-                subdivide(minimum, maximum)
-    print(points)
+    mid_x, mid_y = boundaries(points)
+    root = qtNode(None, None, None, None, points, mid_x, mid_y)
+    print(root)
+    insert(root, max_nodes_per_quad)
+    return root
 
 
-def subdivide(current_x=5, current_y=5):  # TODO: parse the actual fucking numbers!!!
-    print("HERE I WILL SUBDIVIDE")
-    current_x = current_x / 2
-    current_y = current_y / 2
-    return current_x, current_y
+def insert(node, max_nodes_per_quad):
+    cross_x = node.x
+    cross_y = node.y
+    lista = node.points
+    Top_Left_List = []
+    Top_Right_List = []
+    Bottom_Left_List = []
+    Bottom_Right_List = []
+    for point in lista:
+        # print(point)
+        if point[0] <= cross_x and point[1] >= cross_y:
+            Top_Left_List.append(point)
+        if cross_x < point[0] and point[1] > cross_y:
+            Top_Right_List.append(point)
+        if point[0] < cross_x and point[1] < cross_y:
+            Bottom_Left_List.append(point)
+        if cross_x <= point[0] and point[1] <= cross_y:
+            Bottom_Right_List.append(point)
+    lista.clear()
+
+    if len(Top_Left_List) > 0:
+        Top_Left_List.sort(key=lambda tup: tup[0])
+        kapou_x_TL = Top_Left_List[0][0]
+        Top_Left_List.sort(key=lambda tup: tup[1])
+        kapou_y_TL = Top_Left_List[-1][1]
+
+        Top_Left_Child = qtNode(None, None, None, None, Top_Left_List, (cross_x + kapou_x_TL) / 2, (cross_y + kapou_y_TL) / 2)
+        node.TopLeftChild = Top_Left_Child
+        if len(Top_Left_List) > max_nodes_per_quad:
+            insert(Top_Left_Child, max_nodes_per_quad)
+
+    if len(Top_Right_List) > 0:
+        Top_Right_List.sort(key=lambda tup: tup[0])
+        kapou_x_TR = Top_Right_List[-1][0]
+        Top_Right_List.sort(key=lambda tup: tup[1])
+        kapou_y_TR = Top_Right_List[-1][1]
+
+        Top_Right_Child = qtNode(None, None, None, None, Top_Right_List, (cross_x + kapou_x_TR) / 2, (cross_y + kapou_y_TR) / 2)
+        node.TopRightChild = Top_Right_Child
+        if len(Top_Right_List) > max_nodes_per_quad:
+            insert(Top_Right_Child, max_nodes_per_quad)
+
+    if len(Bottom_Left_List) > 0:
+        Bottom_Left_List.sort(key=lambda tup: tup[0])
+        kapou_x_BL = Bottom_Left_List[0][0]
+        Bottom_Left_List.sort(key=lambda tup: tup[1])
+        kapou_y_BL = Bottom_Left_List[0][1]
+
+        Bottom_Left_Child = qtNode(None, None, None, None, Bottom_Left_List, (cross_x + kapou_x_BL) / 2, (cross_y + kapou_y_BL) / 2)
+        node.BottomLeftChild = Bottom_Left_Child
+        if len(Bottom_Left_List) > max_nodes_per_quad:
+            insert(Bottom_Left_Child, max_nodes_per_quad)
+
+    if len(Bottom_Right_List) > 0:
+        Bottom_Right_List.sort(key=lambda tup: tup[0])
+        kapou_x_BR = Bottom_Right_List[-1][0]
+        Bottom_Right_List.sort(key=lambda tup: tup[1])
+        kapou_y_BR = Bottom_Right_List[0][1]
+
+        Bottom_Right_Child = qtNode(None, None, None, None, Bottom_Right_List, (cross_x + kapou_x_BR) / 2, (cross_y + kapou_y_BR ) / 2)
+        node.BottomRightChild = Bottom_Right_Child
+        if len(Bottom_Right_List) > max_nodes_per_quad:
+            insert(Bottom_Right_Child, max_nodes_per_quad)
 
 
-# qt = QuadTree()
-# boundaries(0, 0)
-insert(5, [0, 0], 5)  # TODO: parse the actual numbers
+def traverse_tree(node, point, max_nodes_per_quad):
+    if node.TopLeftChild == None and node.TopRightChild == None and node.BottomLeftChild == None and node.BottomRightChild == None:
+        node.points.append(point)
+        if len(node.points) > max_nodes_per_quad:
+            print(node.points)
+            insert(node, max_nodes_per_quad)
+    cross_x = node.x
+    cross_y = node.y
+    if point[0] <= cross_x and point[1] >= cross_y:
+        traverse_tree(node.TopLeftChild, point, max_nodes_per_quad)
+    if cross_x < point[0] and point[1] > cross_y:
+        traverse_tree(node.TopRightChild, point, max_nodes_per_quad)
+    if point[0] < cross_x and point[1] < cross_y:
+        traverse_tree(node.BottomLeftChild, point, max_nodes_per_quad)
+    if cross_x <= point[0] and point[1] <= cross_y:
+        traverse_tree(node.BottomRightChild, point, max_nodes_per_quad)
+
+
+root = build(points, 1)
+print(root)
+traverse_tree(root, (2, 2), 1)
+print(root)
