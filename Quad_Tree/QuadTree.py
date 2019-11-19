@@ -107,7 +107,22 @@ def traverse_tree(node, point, max_nodes_per_quad):
         traverse_tree(node.BottomRightChild, point, max_nodes_per_quad)
 
 
+def rebalance(node):
+    if node.TopLeftChild == None and node.TopRightChild == None and node.BottomLeftChild == None and node.BottomRightChild == None:
+        for point in node.points:
+            general_list.append(point)
+    else:
+        rebalance(node.TopLeftChild)
+        rebalance(node.TopRightChild)
+        rebalance(node.BottomLeftChild)
+        rebalance(node.BottomRightChild)
+
+    return build(general_list, 1)
+
+
 root = build(points, 1)
 print(root)
-traverse_tree(root, (2, 2), 1)
-print(root)
+# traverse_tree(root, (2, 2), 1)
+# print(root)
+general_list = []
+root = rebalance(root)
