@@ -8,8 +8,12 @@ def delete(root, point):
     else:
         if node['node'].leftChild is None and node['node'].rightChild is None:
             if node['parentNode'].leftChild == node['node']:
-                node['parentNode'].leftChild
+				temp = node['parentNode'].leftChild
+                node['parentNode'].leftChild = None
+				del temp
             if node['parentNode'].rightChild == node['node']:
+				temp = node['parentNode'].leftChild
                 node['parentNode'].rightChild = None
+				del temp
         else:
             print("Not None")
