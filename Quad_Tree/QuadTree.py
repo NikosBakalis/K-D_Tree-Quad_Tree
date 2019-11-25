@@ -2,7 +2,7 @@
 from recordtype import recordtype
 
 # points = [(-3, 1), (1, 1), (-1, -5), (1, -1), (1, 2), (2, 2), (0.5, 2.7)]
-points = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+points = [(1, 1), (1, -1), (-1, 1), (-1, -1), (0, 0)]
 
 qtNode = recordtype('qtNode', 'TopLeftChild TopRightChild BottomLeftChild BottomRightChild points x y')
 
@@ -19,7 +19,7 @@ def build(points, max_nodes_per_quad):
     max_nodes_per_quad = 1  # TODO: This will be asked from the user
     mid_x, mid_y = boundaries(points)
     root = qtNode(None, None, None, None, points, mid_x, mid_y)
-    print(root)
+    # print(root)
     insert(root, max_nodes_per_quad)
     return root
 
@@ -125,4 +125,4 @@ print(root)
 # traverse_tree(root, (2, 2), 1)
 # print(root)
 general_list = []
-root = rebalance(root)
+# root = rebalance(root)
