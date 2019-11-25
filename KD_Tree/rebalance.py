@@ -8,7 +8,7 @@ def gatherTreeNodes(node):
     if node is None:
         return False
     rebuildPoints.append(node.node)
-    return balanceKdTree(node.leftChild), balanceKdTree(node.rightChild)
+    return gatherTreeNodes(node.leftChild), gatherTreeNodes(node.rightChild)
 
 
 def balanceKdTree(node):
