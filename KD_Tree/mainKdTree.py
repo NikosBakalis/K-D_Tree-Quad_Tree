@@ -2,6 +2,7 @@ import medianBuild
 import searchPoint
 import rebalance
 import insert
+import kNNQuery
 
 
 
@@ -18,7 +19,6 @@ if searchedPoint['found']:
 else:
     print("Not Found")
 
-
-
+print(kNNQuery.kNNSearch(root, (0,0), 7))
 root = rebalance.balanceKdTree(root)
 
