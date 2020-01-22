@@ -1,15 +1,17 @@
 dimensions = 2
 
 
-def kdTreeSearch(node, point, depth=0, previous_node=None):
+def kdTreeSearch(node, point, depth = 0, previous_node = None):
     if node is None:
-        return {  # A dictionary is returned cause it would be more helpful to know the parent node for insert function.
+        return 
+		{  # A dictionary is returned cause it would be more helpful to know the parent node for insert function.
             'found': False,
             'parentNode': previous_node,
             'depth': depth
         }
     if node.node == point:
-        return {
+        return 
+		{
             'found': True
         }
     axis = depth % dimensions

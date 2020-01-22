@@ -22,8 +22,7 @@ def findMinimum(node, depth, axis):
     #  If current dimension is different then minimum can be anywhere
     #  in this subtree
 
-    return minNode(node, findMinimum(node.leftChild, axis, depth + 1),
-                   findMinimum(node.rightChild, axis, depth + 1), axis)
+    return minNode(node, findMinimum(node.leftChild, axis, depth + 1), findMinimum(node.rightChild, axis, depth + 1), axis)
 
 
 def findMin(node, axis):
