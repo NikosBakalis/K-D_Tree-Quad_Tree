@@ -1,5 +1,5 @@
 import searchPoint
-from KD_Tree.medianBuild import kdNode
+from medianBuild import kdNode
 
 
 def insertNode(root, point):
