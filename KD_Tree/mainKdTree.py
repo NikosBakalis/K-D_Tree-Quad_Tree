@@ -2,11 +2,18 @@ import medianBuild
 import searchPoint
 import rebalance
 import insert
-import kNNQuery
 
+import csv
 
+x_y_values = []
+with open('points', 'r') as f:
+    reader = csv.reader(f, delimiter=' ')
+    for row in reader:
+        x_y_values.append((int(row[0]), int(row[1])))
+print(x_y_values)
 
-points = [(7, 2), (5, 4), (9, 6), (4, 7), (8, 1), (2, 3)]
+points = x_y_values
+
 dimensions = 2
 
 root = medianBuild.kdTreeBuild(points, 0)  # Build the tree
@@ -19,6 +26,7 @@ if searchedPoint['found']:
 else:
     print("Not Found")
 
-print(kNNQuery.kNNSearch(root, (0,0), 7))
+
+
 root = rebalance.balanceKdTree(root)
 
