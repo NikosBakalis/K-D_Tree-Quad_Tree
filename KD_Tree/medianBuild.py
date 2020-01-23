@@ -1,4 +1,5 @@
 from recordtype import recordtype
+
 dimensions = 2
 kdNode = recordtype('kdNode', 'node leftChild rightChild') #Struct properties:node(tuple), leftChild, rightChild
 

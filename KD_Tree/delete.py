@@ -3,8 +3,8 @@ import findMinimum
 import maxim
 
 
-def deleteNode(root, point):
-    searchedNode = searchPoint.kdTreeSearch(root, point)
+def deleteNode(root, point,depth):
+    searchedNode = searchPoint.kdTreeSearch(root, point,depth)
     tempNode = None
     if searchedNode['found'] is False:
         print("Node to be deleted, Not Found")
@@ -16,13 +16,13 @@ def deleteNode(root, point):
             elif searchedNode['node'].rightChild is not None:  # If node to be deleted has a right subtree
 
                 minNode = maxim.findMin(searchedNode['node'].rightChild, searchedNode['depth'] % 2)
-                deleteNode(searchedNode['node'], minNode)
+                deleteNode(searchedNode['node'], minNode,searchedNode['depth'] % 2)
                 searchedNode['node'].node = minNode
 
             elif searchedNode['node'].leftChild is not None:
 
                 maxNode = maxim.findMax(searchedNode['node'].leftChild, searchedNode['depth'] % 2)
-                deleteNode(searchedNode['node'], maxNode)
+                deleteNode(searchedNode['node'], maxNode,searchedNode['depth'] % 2)
                 searchedNode['node'].node = maxNode
 
         elif searchedNode['node'].leftChild is None and searchedNode['node'].rightChild is None:
@@ -34,10 +34,10 @@ def deleteNode(root, point):
             minNode = maxim.findMin(searchedNode['node'].rightChild, searchedNode['depth'] % 2)
 
             if searchedNode['parentNode'].leftChild == searchedNode['node']:
-                deleteNode(searchedNode['node'], minNode)
+                deleteNode(searchedNode['node'], minNode,searchedNode['depth'] % 2)
                 searchedNode['parentNode'].leftChild.node = minNode
             if searchedNode['parentNode'].rightChild == searchedNode['node']:
-                deleteNode(searchedNode['node'], minNode)
+                deleteNode(searchedNode['node'], minNode,searchedNode['depth'] % 2)
                 searchedNode['parentNode'].rightChild.node = minNode
 
             # searchedNode['node'].node = minNode
@@ -45,10 +45,10 @@ def deleteNode(root, point):
             maxNode = maxim.findMax(searchedNode['node'].leftChild, searchedNode['depth'] % 2)
 
             if searchedNode['parentNode'].leftChild == searchedNode['node']:
-                deleteNode(searchedNode['node'], maxNode)
+                deleteNode(searchedNode['node'], maxNode,searchedNode['depth'] % 2)
                 searchedNode['parentNode'].leftChild.node = maxNode
             if searchedNode['parentNode'].rightChild == searchedNode['node']:
-                deleteNode(searchedNode['node'], maxNode)
+                deleteNode(searchedNode['node'], maxNode,searchedNode['depth'] % 2)
                 searchedNode['parentNode'].rightChild.node = maxNode
 
 

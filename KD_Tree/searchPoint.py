@@ -1,7 +1,7 @@
 dimensions = 2
 
 
-def kdTreeSearch(node, point, depth=0, previous_node=None):
+def kdTreeSearch(node, point, depth, previous_node=None):
     if node is None:
         return {  # A dictionary is returned cause it would be more helpful to know the parent node for insert function.
             'found': False,

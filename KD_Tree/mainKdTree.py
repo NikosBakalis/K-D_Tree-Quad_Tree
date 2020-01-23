@@ -2,31 +2,40 @@ import medianBuild
 import searchPoint
 import rebalance
 import insert
+import kNNQuery
+import delete
 
-import csv
+points = []
+file = open("test.txt","r")
+for line in file:
+    points.append(eval(line))
+file.close()
 
-x_y_values = []
-with open('points', 'r') as f:
-    reader = csv.reader(f, delimiter=' ')
-    for row in reader:
-        x_y_values.append((int(row[0]), int(row[1])))
-print(x_y_values)
-
-points = x_y_values
-
+print(points)
 dimensions = 2
 
 root = medianBuild.kdTreeBuild(points, 0)  # Build the tree
 
-insert.insertNode(root, (8, 2))
-searchedPoint = searchPoint.kdTreeSearch(root, (8, 2))  # The point needs to be created first in order to be compared
-# in if function
-if searchedPoint['found']:
-    print("Found")
-else:
-    print("Not Found")
+print(points)
+point = points.pop(500)
+print(searchPoint.kdTreeSearch(root, point,0))
+delete.deleteNode(root,point,0)
+print(searchPoint.kdTreeSearch(root, point,0))
 
 
-
-root = rebalance.balanceKdTree(root)
+# insert.insertNode(root, (8, 2))
+# searchedPoint = searchPoint.kdTreeSearch(root, (7, 2))  # The point needs to be created first in order to be compared
+# # in if function
+# if searchedPoint['found']:
+#     print("Found")
+# else:
+#     print("Not Found")
+#
+# delete.deleteNode(root,(7,2))
+#
+# searchedPoint = searchPoint.kdTreeSearch(root, (7,2))
+# if searchedPoint['found']:
+#     print("Found")
+# else:
+#     print("Not Found")
 

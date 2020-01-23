@@ -1,5 +1,5 @@
 import searchPoint
-from medianBuild import kdNode
+import medianBuild
 
 
 def insertNode(root, point):
@@ -9,9 +9,9 @@ def insertNode(root, point):
         return None
     else:
         depth = searchedNode['depth']
-        axis = depth % 2  # tree has 2 dimensions
+        axis = depth % 2  # 2 cause this tree has 2 dimensions
         node = searchedNode['parentNode']
         if point[axis] < node.node[axis]:
-            node.leftChild = kdNode(point, None, None)
+            node.leftChild = medianBuild.kdNode(point, None, None)
         else:
-            node.rightChild = kdNode(point, None, None)
+            node.rightChild = medianBuild.kdNode(point, None, None)
