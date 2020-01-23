@@ -9,7 +9,7 @@ def traverse_tree(node, point, max_nodes_per_quad):
             return insert.insert(node, max_nodes_per_quad)
     cross_x = node.x
     cross_y = node.y
-	# Check for the suttable child
+	# Check for the suitable child
     if point[0] <= cross_x and point[1] >= cross_y:
         traverse_tree(node.TopLeftChild, point, max_nodes_per_quad)
     else:
