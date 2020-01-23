@@ -2,13 +2,14 @@ import insert
 
 
 def traverse_tree(node, point, max_nodes_per_quad):
-    if node.TopLeftChild is None and node.TopRightChild is None and node.BottomLeftChild is None and node.BottomRightChild is None:
+    if node.TopLeftChild is None and node.TopRightChild is None and node.BottomLeftChild is None and node.BottomRightChild is None: # Is leaf node
         node.points.append(point)
-        if len(node.points) > max_nodes_per_quad:
+        if len(node.points) > max_nodes_per_quad: # Spilt child if points are hight that max point per quad
             print(node.points)
             return insert.insert(node, max_nodes_per_quad)
     cross_x = node.x
     cross_y = node.y
+	# Check for the suttable child
     if point[0] <= cross_x and point[1] >= cross_y:
         traverse_tree(node.TopLeftChild, point, max_nodes_per_quad)
     else:

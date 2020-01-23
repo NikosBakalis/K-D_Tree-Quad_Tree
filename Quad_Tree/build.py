@@ -6,7 +6,7 @@ qtNode = recordtype('qtNode', 'TopLeftChild TopRightChild BottomLeftChild Bottom
 
 
 def build(points, max_nodes_per_quad):
-    mid_x, mid_y = boundaries.boundaries(points)
+    mid_x, mid_y = boundaries.boundaries(points) # Calculate first cross boundaries
     root = qtNode(None, None, None, None, points, mid_x, mid_y)
     insert.insert(root, max_nodes_per_quad)
     return root

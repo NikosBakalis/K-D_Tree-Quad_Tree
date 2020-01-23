@@ -1,4 +1,3 @@
-# Test on PC No. 2
 import boundaries
 import build
 import insert
@@ -27,5 +26,5 @@ root = build.build(points, 1)
 traverseTree.traverse_tree(root, (2, 2), 1)
 print(root)
 general_list = []
-root = rebalance.rebalance(root)
+root = rebalance.rebalance(root, 1)
 print(root)
