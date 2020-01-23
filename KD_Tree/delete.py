@@ -1,22 +1,54 @@
-from KDTree import searchPoint
-from KDTree import findMinimum
-from KDTree.findMinimum import findMin
+import searchPoint
+import findMinimum
+import maxim
 
 
 def deleteNode(root, point):
     searchedNode = searchPoint.kdTreeSearch(root, point)
+    tempNode = None
     if searchedNode['found'] is False:
-        print("Node to be deleted, Not Found.")
+        print("Node to be deleted, Not Found")
     else:
-        if searchedNode['node'].leftChild is None and searchedNode['node'].rightChild is None:
-            if searchedNode['parentNode'].leftChild == searchedNode['node']: # Delete left child
+        if searchedNode['parentNode'] is None:  # Root case
+            if searchedNode['node'].leftChild is None and searchedNode['node'].rightChild is None:
+                print("You deleted the only node in tree, tree is destroyed now please rebuild")
+                searchedNode['node'] = None
+            elif searchedNode['node'].rightChild is not None:  # If node to be deleted has a right subtree
+
+                minNode = maxim.findMin(searchedNode['node'].rightChild, searchedNode['depth'] % 2)
+                deleteNode(searchedNode['node'], minNode)
+                searchedNode['node'].node = minNode
+
+            elif searchedNode['node'].leftChild is not None:
+
+                maxNode = maxim.findMax(searchedNode['node'].leftChild, searchedNode['depth'] % 2)
+                deleteNode(searchedNode['node'], maxNode)
+                searchedNode['node'].node = maxNode
+
+        elif searchedNode['node'].leftChild is None and searchedNode['node'].rightChild is None:
+            if searchedNode['parentNode'].leftChild == searchedNode['node']:
                 searchedNode['parentNode'].leftChild = None
-            if searchedNode['parentNode'].rightChild == searchedNode['node']: # Delete right child
+            if searchedNode['parentNode'].rightChild == searchedNode['node']:
                 searchedNode['parentNode'].rightChild = None
         elif searchedNode['node'].rightChild is not None:  # If node to be deleted has a right subtree
-            minNode = findMin(searchedNode['node'].rightChild, searchedNode['depth'] % 2)
+            minNode = maxim.findMin(searchedNode['node'].rightChild, searchedNode['depth'] % 2)
 
-            # copy the minimum to the root
-            searchedNode['node'].node = minNode.node
-			# Recursively delete the minimum
-            searchedNode['node'].rightChild = deleteNode(searchedNode['node'].rightChild, minNode.node)
+            if searchedNode['parentNode'].leftChild == searchedNode['node']:
+                deleteNode(searchedNode['node'], minNode)
+                searchedNode['parentNode'].leftChild.node = minNode
+            if searchedNode['parentNode'].rightChild == searchedNode['node']:
+                deleteNode(searchedNode['node'], minNode)
+                searchedNode['parentNode'].rightChild.node = minNode
+
+            # searchedNode['node'].node = minNode
+        elif searchedNode['node'].leftChild is not None:
+            maxNode = maxim.findMax(searchedNode['node'].leftChild, searchedNode['depth'] % 2)
+
+            if searchedNode['parentNode'].leftChild == searchedNode['node']:
+                deleteNode(searchedNode['node'], maxNode)
+                searchedNode['parentNode'].leftChild.node = maxNode
+            if searchedNode['parentNode'].rightChild == searchedNode['node']:
+                deleteNode(searchedNode['node'], maxNode)
+                searchedNode['parentNode'].rightChild.node = maxNode
+
+
