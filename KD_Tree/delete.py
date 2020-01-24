@@ -3,8 +3,8 @@ import findMinimum
 import maxim
 
 
-def deleteNode(root, point,depth):
-    searchedNode = searchPoint.kdTreeSearch(root, point,depth)
+def deleteNode(root, point, depth):
+    searchedNode = searchPoint.kdTreeSearch(root, point, depth)
     tempNode = None
     if searchedNode['found'] is False: # Check if node exists in the tree
         print("Node to be deleted, Not Found")

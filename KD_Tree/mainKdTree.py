@@ -4,38 +4,36 @@ import rebalance
 import insert
 import kNNQuery
 import delete
+import time
 
 points = []
-file = open("test.txt","r")
+file = open("test.txt", "r")
 for line in file:
     points.append(eval(line))
 file.close()
 
-print(points)
 dimensions = 2
 
+start_time = time.time()
 root = medianBuild.kdTreeBuild(points, 0)  # Build the tree
+elapsed_time = time.time() - start_time
 
-print(points)
-point = points.pop(500)
-print(searchPoint.kdTreeSearch(root, point,0))
-delete.deleteNode(root,point,0)
-print(searchPoint.kdTreeSearch(root, point,0))
+print("Kd Tree Build: ", elapsed_time)
 
+start_time = time.time()
+for point in points:
+    searchNode = searchPoint.kdTreeSearch(root, point, 0)
+elapsed_time = time.time() - start_time
+print("Kd Tree Search: ", elapsed_time)
 
-# insert.insertNode(root, (8, 2))
-# searchedPoint = searchPoint.kdTreeSearch(root, (7, 2))  # The point needs to be created first in order to be compared
-# # in if function
-# if searchedPoint['found']:
-#     print("Found")
-# else:
-#     print("Not Found")
-#
-# delete.deleteNode(root,(7,2))
-#
-# searchedPoint = searchPoint.kdTreeSearch(root, (7,2))
-# if searchedPoint['found']:
-#     print("Found")
-# else:
-#     print("Not Found")
+start_time = time.time()
+for point in points[:100]:
+    delete.deleteNode(root, point, 0)
+elapsed_time = time.time() - start_time
+print("Kd Tree Delete: ", elapsed_time)
 
+start_time = time.time()
+for point in points[:100]:
+    KNNPoints = kNNQuery.kNNSearch(root, point, 4)
+elapsed_time = time.time() - start_time
+print("Kd Tree KNNSearch: ", elapsed_time)

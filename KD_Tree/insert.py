@@ -3,7 +3,7 @@ import medianBuild
 
 
 def insertNode(root, point):
-    searchedNode = searchPoint.kdTreeSearch(root, point)
+    searchedNode = searchPoint.kdTreeSearch(root, point, 0)
     if searchedNode['found']:
         print("Node already exists")
         return None
