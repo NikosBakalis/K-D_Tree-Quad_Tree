@@ -10,10 +10,10 @@ def euclideanDistance(a, b):
 
 def kNNSearch(node, queryPoint, k):
     reverseSearch(node, queryPoint, k) 
-    if len(kNNPoints) < k:
-        print("sorry,not enough points")
-    else:
-        print("enough points")
+    # if len(kNNPoints) < k:
+    #     print("sorry,not enough points")
+    # else:
+    #     print("enough points")
     return kNNPoints # Return points and distance
 
 def reverseSearch(node, queryPoint, k):
@@ -28,6 +28,7 @@ def reverseSearch(node, queryPoint, k):
                 if len(kNNPoints) == k:
                     kNNPoints.pop(-1)
                 kNNPoints.append((node.points[i], distance))     # Append (node, distance) in this list
+                kNNPoints.sort(key=lambda tup: tup[1])
                 minimumDistance = kNNPoints[-1][1]  # Last element distance(furthest distance)
     else:
         if queryPoint[0] <= node.x and queryPoint[1] >= node.y: # Priority search based on search path
